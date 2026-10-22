@@ -16,6 +16,17 @@ public class ProjectController(ApplicationDbContext context) : ControllerBase
         return Ok(projects);
     }
     
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Project>> GetProject(int id)
+    {
+        var project = await context.Projects.FindAsync(id);
+        if (project == null)
+        {
+            return NotFound();
+        }
+        return Ok(project);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Project>> CreateProject(Project project)
     {
