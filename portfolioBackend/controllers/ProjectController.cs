@@ -1,25 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using portfolioBackend.data;
+using portfolioBackend.DTOs;
+using portfolioBackend.Interfaces;
 using portfolioBackend.models;
 
 namespace portfolioBackend.controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController(ApplicationDbContext context) : ControllerBase
+public class ProjectController(
+    IProjectService projectService
+    ) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
     {
-        var projects = await context.Projects.ToListAsync();
+        var projects = await projectService.GetAllProjects();
         return Ok(projects);
     }
     
     [HttpGet("{id}")]
     public async Task<ActionResult<Project>> GetProject(int id)
     {
-        var project = await context.Projects.FindAsync(id);
+        var project = await projectService.GetProjectById(id);
         if (project == null)
         {
             return NotFound();
@@ -28,43 +32,34 @@ public class ProjectController(ApplicationDbContext context) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Project>> CreateProject(Project project)
+    public async Task<ActionResult<Project>> CreateProject(CreateProjectDto project)
     {
-        context.Projects.Add(project);
-        await context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetProjects), new { id = project.Id }, project);
+        var createdProject = await projectService.CreateProject(project);
+        return CreatedAtAction(nameof(GetProjects), new { id = createdProject.Id }, createdProject);
     }
     
     [HttpPut("{id}")]   
-    public async Task<ActionResult> UpdateProject(int Id , Project UpdatedProject)
+    public async Task<ActionResult> UpdateProject(int Id , UpdateProjectDto UpdatedProject)
     {
-        var project = await context.Projects.FindAsync(Id);
+        var project = await projectService.GetProjectById(Id);
         if (project == null)
         {
             return NotFound();
         }
-        project.Titel = UpdatedProject.Titel;
-        project.Beschrijving = UpdatedProject.Beschrijving;
-        project.Categorie = UpdatedProject.Categorie;
-        project.GithubUrl = UpdatedProject.GithubUrl;
-        project.datum = UpdatedProject.datum;
-        
-        await context.SaveChangesAsync();
+        await projectService.UpdateProject(Id, UpdatedProject);
         return NoContent();
     }
      
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteProject(int id)
     {
-        var project = await context.Projects.FindAsync(id);
+        var project = await projectService.GetProjectById(id);
         if (project == null)
         {
             return NotFound();
         }
 
-        context.Projects.Remove(project);
-        await context.SaveChangesAsync();
-
+        await projectService.DeleteProject(id);
         return NoContent();
     }
 }

@@ -7,8 +7,7 @@ using portfolioBackend.models;
 namespace portfolioBackend.Services;
 
 public class ProjectService(
-    ApplicationDbContext context,
-    IProjectService projectService
+    ApplicationDbContext context
 ) : IProjectService
 {
     public async Task<List<Project>> GetAllProjects()

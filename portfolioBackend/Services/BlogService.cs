@@ -7,8 +7,7 @@ using portfolioBackend.models;
 namespace portfolioBackend.Services;
 
 public class BlogService(
-    ApplicationDbContext context,
-    IBlogService blogService
+    ApplicationDbContext context
 ) : IBlogService
 {
     public async Task<List<BlogPost>> GetAllBlogs()
