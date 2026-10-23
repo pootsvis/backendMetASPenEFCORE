@@ -6,10 +6,10 @@ using portfolioBackend.models;
 
 namespace portfolioBackend.Services;
 
-public class ProjectService (
-    ApplicationDbContext context, 
+public class ProjectService(
+    ApplicationDbContext context,
     IProjectService projectService
-    ) : IProjectService
+) : IProjectService
 {
     public async Task<List<Project>> GetAllProjects()
     {
@@ -23,6 +23,7 @@ public class ProjectService (
         {
             throw new InvalidOperationException("Project not found");
         }
+
         return project;
     }
 
@@ -75,18 +76,5 @@ public class ProjectService (
         await context.SaveChangesAsync();
 
         return true;
-    }
-    
-    public ProjectResponse GetProjectResponse(Project project)
-    {
-        return new ProjectResponse
-        {
-            Id = project.Id,
-            Titel = project.Titel,
-            Beschrijving = project.Beschrijving,
-            Categorie = project.Categorie,
-            GithubUrl = project.GithubUrl,
-            datum = project.datum
-        };
     }
 }
