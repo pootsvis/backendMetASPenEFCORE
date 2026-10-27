@@ -39,14 +39,14 @@ public class ProjectController(
     }
     
     [HttpPut("{id}")]   
-    public async Task<ActionResult> UpdateProject(int Id , UpdateProjectDto UpdatedProject)
+    public async Task<ActionResult> UpdateProject(int id , UpdateProjectDto UpdatedProject)
     {
-        var project = await projectService.GetProjectById(Id);
+        var project = await projectService.GetProjectById(id);
         if (project == null)
         {
             return NotFound();
         }
-        await projectService.UpdateProject(Id, UpdatedProject);
+        await projectService.UpdateProject(id, UpdatedProject);
         return NoContent();
     }
      
