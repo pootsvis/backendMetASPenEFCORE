@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using portfolioBackend.data;
 using portfolioBackend.DTOs;
@@ -31,13 +32,15 @@ public class ProjectController(
         return Ok(project);
     }
 
+    [Authorize(Roles = "Editor,Admin")]
     [HttpPost]
     public async Task<ActionResult<Project>> CreateProject(CreateProjectDto project)
     {
         var createdProject = await projectService.CreateProject(project);
-        return CreatedAtAction(nameof(GetProjects), new { id = createdProject.Id }, createdProject);
+        return CreatedAtAction(nameof(GetProject), new { id = createdProject.Id }, createdProject);
     }
     
+    [Authorize(Roles = "Editor,Admin")]
     [HttpPut("{id}")]   
     public async Task<ActionResult> UpdateProject(int id , UpdateProjectDto UpdatedProject)
     {
@@ -50,6 +53,7 @@ public class ProjectController(
         return NoContent();
     }
      
+    [Authorize(Roles = "Editor,Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteProject(int id)
     {

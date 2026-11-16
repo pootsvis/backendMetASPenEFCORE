@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using portfolioBackend.data;
 using portfolioBackend.DTOs.Blog;
@@ -28,6 +29,7 @@ public class BlogPostController (IBlogService blogService) : ControllerBase
         return Ok(blogPost);
     }
     
+    [Authorize(Roles = "Editor,Admin")]
     [HttpPost]
     public async Task<ActionResult<BlogPost>> CreateBlogPost(CreateBlogDto blogPost)
     {
@@ -35,6 +37,7 @@ public class BlogPostController (IBlogService blogService) : ControllerBase
         return CreatedAtAction(nameof(GetBlogPost), new { id = createdBlogPost.Id }, createdBlogPost);
     }
 
+    [Authorize(Roles = "Editor,Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateBlogPost(int id, UpdateBlogDto updatedBlogPost)
     {
@@ -51,6 +54,7 @@ public class BlogPostController (IBlogService blogService) : ControllerBase
         return NoContent();
     }
     
+    [Authorize(Roles = "Editor,Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteBlogPost(int id)
     {

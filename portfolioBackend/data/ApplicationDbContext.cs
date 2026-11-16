@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using portfolioBackend.models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace portfolioBackend.data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<BlogPost> BlogPosts { get; set; }
     public DbSet<Project> Projects { get; set; }
