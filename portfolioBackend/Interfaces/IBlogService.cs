@@ -16,7 +16,7 @@ public interface IBlogService
     /// </summary>
     /// <param name="id">The ID of the blog to retrieve</param>
     /// <returns>The blog with the specified ID</returns>
-    Task<BlogPost> GetBlogById(int id);
+    Task<BlogPost?> GetBlogById(int id);
     
     ///<summary>
     /// Create a new blog post

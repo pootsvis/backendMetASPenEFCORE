@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using portfolioBackend.data;
 using portfolioBackend.DTOs.Blog;
 using portfolioBackend.Interfaces;
 using portfolioBackend.models;
@@ -46,9 +44,6 @@ public class BlogPostController (IBlogService blogService) : ControllerBase
         {
             return NotFound();
         }
-        blogPost.Titel = updatedBlogPost.Titel;
-        blogPost.Inhoud = updatedBlogPost.Inhoud;
-        blogPost.PublicatieDatum = updatedBlogPost.PublicatieDatum;
 
         await blogService.UpdateBlog(id, updatedBlogPost);
         return NoContent();

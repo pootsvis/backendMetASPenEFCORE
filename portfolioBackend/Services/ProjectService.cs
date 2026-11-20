@@ -15,15 +15,9 @@ public class ProjectService(
         return await context.Projects.ToListAsync();
     }
 
-    public async Task<Project> GetProjectById(int id)
+    public async Task<Project?> GetProjectById(int id)
     {
-        Project? project = await context.Projects.FindAsync(id);
-        if (project == null)
-        {
-            throw new InvalidOperationException("Project not found");
-        }
-
-        return project;
+        return await context.Projects.FindAsync(id);
     }
 
     public async Task<Project> CreateProject(CreateProjectDto projectDto)
@@ -51,11 +45,12 @@ public class ProjectService(
             throw new InvalidOperationException("Project not found");
         }
 
-        project.Titel = projectDto.Titel;
-        project.Beschrijving = projectDto.Beschrijving;
-        project.Categorie = projectDto.Categorie;
-        project.GithubUrl = projectDto.GithubUrl;
-        project.datum = projectDto.datum;
+        if (projectDto.Titel != null) project.Titel = projectDto.Titel;
+        if (projectDto.Beschrijving != null) project.Beschrijving = projectDto.Beschrijving;
+        if (projectDto.Categorie != null) project.Categorie = projectDto.Categorie;
+        if (projectDto.GithubUrl != null) project.GithubUrl = projectDto.GithubUrl;
+        if (projectDto.datum.HasValue) project.datum = projectDto.datum.Value;
+
 
         context.Projects.Update(project);
         await context.SaveChangesAsync();

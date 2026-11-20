@@ -88,13 +88,11 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.MapControllers();
         }
 
         app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.MapControllers();
         app.Run();
     }

@@ -16,7 +16,7 @@ public interface IProjectService
     //</summary>
     // <param name="id">The ID of the project</param>
     // <returns>The project</returns>
-    Task<Project> GetProjectById(int id);
+    Task<Project?> GetProjectById(int id);
     
     //<summary>
     // Create a new project

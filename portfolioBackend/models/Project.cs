@@ -4,7 +4,6 @@ namespace portfolioBackend.models;
 
 public class Project
 {
-    [JsonIgnore]
     public int? Id { get; set; }
     public string Titel { get; set; }
     public string Beschrijving { get; set; }
