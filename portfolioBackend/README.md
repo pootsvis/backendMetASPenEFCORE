@@ -59,7 +59,7 @@ Kopieer `.env.example` naar `.env` (dit bestand staat in `.gitignore`) en vul ze
 
 ```
 POSTGRES_USER=appuser
-POSTGRES_PASSWORD=<kies-een-wachtwoord>
+POSTGRES_PASSWORD=<Editor1234!>
 POSTGRES_DB=appdb
 ```
 
@@ -71,9 +71,9 @@ Voer uit in de map van de repository (gebruik hetzelfde wachtwoord als in `.env`
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=appdb;Username=appuser;Password=<hetzelfde-wachtwoord>" --project portfolioBackend
 
 dotnet user-secrets set "Seed:EditorEmail" "editor@lokaal.nl" --project portfolioBackend
-dotnet user-secrets set "Seed:EditorPassword" "<kies-een-wachtwoord>" --project portfolioBackend
+dotnet user-secrets set "Seed:EditorPassword" "<Editor1234!>" --project portfolioBackend
 dotnet user-secrets set "Seed:AdminEmail" "admin@lokaal.nl" --project portfolioBackend
-dotnet user-secrets set "Seed:AdminPassword" "<kies-een-ander-wachtwoord>" --project portfolioBackend
+dotnet user-secrets set "Seed:AdminPassword" "<Admin1234!>" --project portfolioBackend
 ```
 
 Wachtwoorden moeten minimaal 8 tekens lang zijn en voldoen aan de standaardregels van Identity (hoofdletter, kleine letter, cijfer en speciaal teken).
